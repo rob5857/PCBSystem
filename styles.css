@@ -93,6 +93,7 @@ body {
 /* Hero section */
 .hero {
     background: linear-gradient(135deg, rgba(30,60,114,0.3) 0%, rgba(42,82,152,0.3) 100%), url('FotoBanner.jpg') no-repeat center center/cover;
+     <img src="FotoBanner.jpg" alt="Logo CompuTec" class="styles.css/.hero">
     height: 600px;
     display: flex;
     justify-content: center;
@@ -980,5 +981,6 @@ footer {
     color: #4fc3f7;
     font-weight: bold;
 }
+
 
 
