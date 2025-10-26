@@ -36,9 +36,8 @@
             </div>
         </nav>
     </header>
-
-    <main>
-        <section id="home" class="hero">
+<!-- 🎞️ Banner con Slideshow -->
+  <section id="home" class="hero">
   <div class="hero-slideshow">
     <img src="FotoBanner1.png" class="slide active" alt="Slide 1">
     <img src="FotoBanner.jpg" class="slide" alt="Slide 2">
@@ -67,35 +66,43 @@
   </div>
 </section>
 
-<script>
-  const slides = document.querySelectorAll('.hero-slideshow .slide');
-  const dots = document.querySelectorAll('.dot');
-  let currentSlide = 0;
+ <!-- 🎬 Script del slideshow -->
+  <script>
+    const slides = document.querySelectorAll('.hero-slideshow .slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    let slideInterval = setInterval(nextSlide, 5000);
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === index);
-      dots[i].classList.toggle('active', i === index);
-    });
-  }
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        dots[i].classList.toggle('active', i === index);
+      });
+    }
 
-  function changeSlide(direction) {
-    currentSlide = (currentSlide + direction + slides.length) % slides.length;
-    showSlide(currentSlide);
-  }
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
 
-  function goToSlide(index) {
-    currentSlide = index;
-    showSlide(currentSlide);
-  }
+    function changeSlide(direction) {
+      clearInterval(slideInterval); // pausa el auto-play al usar botones
+      currentSlide = (currentSlide + direction + slides.length) % slides.length;
+      showSlide(currentSlide);
+      slideInterval = setInterval(nextSlide, 5000); // reinicia el auto-play
+    }
 
-  setInterval(() => changeSlide(1), 5000);
+    function goToSlide(index) {
+      clearInterval(slideInterval);
+      currentSlide = index;
+      showSlide(currentSlide);
+      slideInterval = setInterval(nextSlide, 5000);
+    }
 
-  function scrollToSection(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-  }
-</script>
-
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
         <section id="about" class="about-section">
             <div class="container">
                 <h2>Sobre Nuestra Escuela</h2>
@@ -358,6 +365,7 @@
     </script>
 </body>
 </html>
+
 
 
 
