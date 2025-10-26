@@ -5,73 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Escolar - Mi Colegio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles1.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papb+Y1+Y+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q6+6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="nav-container">
-                <h1 class="logo">PCB System </h1>
-                <ul class="nav-menu">
-                    <li><a href="#home">Inicio</a></li>
-                    <li><a href="#classes">Cursos</a></li>
-                    <li><a href="calendario.html">Vida escolar</a></li>
-                    <li><a href="comunidad.html">Comunidad</a></li>
-                    <li><a href="#contact">Contacto</a></li>
-                    <li><button class="login-button" onclick="window.location.href='login.html'">Login</button></li>
-                    <li class="dropdown">
-                        <button class="menu-button" onclick="toggleDropdown()">
-                            <div class="hamburger-line"></div>
-                            <div class="hamburger-line"></div>
-                            <div class="hamburger-line"></div>
-                        </button>
-                        <div id="dropdown-menu" class="dropdown-content">
-                            <a href="#" onclick="selectOption('Ajustes')">Ajustes</a>
-                            <a href="#" onclick="selectOption('Idioma')">Idioma</a>
-                            <a href="#" onclick="selectOption('Ayuda')">Ayuda</a>
-                        </div>
-                    </li>
-                </ul>
+<div class="hero">
+        <div class="hero-slideshow">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&h=1080&fit=crop" class="slide active" alt="Campus escolar">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920&h=1080&fit=crop" class="slide" alt="Estudiantes en clase">
+            <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1920&h=1080&fit=crop" class="slide" alt="Biblioteca escolar">
+            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1920&h=1080&fit=crop" class="slide" alt="Laboratorio">
+        </div>
+
+        <!-- Controles de navegación -->
+        <div class="slideshow-controls">
+            <button class="control-btn" id="prevBtn" aria-label="Anterior">‹</button>
+            <button class="control-btn" id="nextBtn" aria-label="Siguiente">›</button>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">Bienvenido a la Superior Pablo Colón Berdecia</h1>
+            <p class="hero-subtitle">Tu plataforma educativa para gestionar clases, tareas y horarios</p>
+            <div class="hero-buttons">
+                <button class="cta-button primary">Ver Clases</button>
+                <button class="cta-button secondary">Contáctanos</button>
             </div>
-        </nav>
-    </header>
+        </div>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">Bienvenido a la Superior Pablo Colón Berdecia</h1>
-                <p class="hero-subtitle">Tu plataforma educativa para gestionar clases, tareas y horarios</p>
-                <div class="hero-buttons">
-                    <button class="cta-button primary" onclick="scrollToSection('classes')">Ver Clases</button>
-                    <button class="cta-button secondary" onclick="scrollToSection('contact')">Contactanos</button>
-                </div>
-            </div>
-        </section>
- <div class="hero">
-    <div class="hero-slideshow">
-      <img src="FotoBanner1.jpg" class="slide active" alt="Slide 1">
-      <img src="FotoBanner2.jpg" class="slide" alt="Slide 2">
-      <img src="FotoBanner3.jpg" class="slide" alt="Slide 3">
+        <!-- Indicadores -->
+        <div class="slideshow-indicators" id="indicators"></div>
     </div>
-    <div class="hero-content">
-      <h1 class="hero-title">Bienvenido a Nuestro Sitio</h1>
-      <p class="hero-subtitle">Descubre nuestras soluciones innovadoras</p>
-      <div class="hero-buttons">
-        <button class="cta-button primary">Comenzar</button>
-      </div>
-    </div>
-  </div>
 
-  <script>
-    const slides = document.querySelectorAll('.hero-slideshow .slide');
-    let current = 0;
+    <script>
+        const slides = document.querySelectorAll('.hero-slideshow .slide');
+        const indicatorsContainer = document.getElementById('indicators');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        let current = 0;
+        let autoPlayInterval;
 
-    function showNextSlide() {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }
+        // Crear indicadores
+        slides.forEach((_, index) => {
+            const indicator = document.createElement('div');
+            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+            indicator.addEventListener('click', () => goToSlide(index));
+            indicatorsContainer.appendChild(indicator);
+        });
+
+        const indicators = document.querySelectorAll('.indicator');
+
+        function updateSlide(newIndex) {
+            slides[current].classList.remove('active');
+            indicators[current].classList.remove('active');
+            
+            current = newIndex;
+            if (current >= slides.length) current = 0;
+            if (current < 0) current = slides.length - 1;
+            
+            slides[current].classList.add('active');
+            indicators[current].classList.add('active');
+        }
+
+        function showNextSlide() {
+            updateSlide(current + 1);
+        }
+
+        function showPrevSlide() {
+            updateSlide(current - 1);
+        }
+
+        function goToSlide(index) {
+            updateSlide(index);
+            resetAutoPlay();
+        }
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            startAutoPlay();
+        }
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(showNextSlide, 5000);
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', () => {
+            showNextSlide();
+            resetAutoPlay();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            showPrevSlide();
+            resetAutoPlay();
+        });
+
+        // Pausar autoplay al hacer hover
+        const hero = document.querySelector('.hero');
+        hero.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+        hero.addEventListener('mouseleave', startAutoPlay);
+
+        // Iniciar autoplay
+        startAutoPlay();
+
+        // Soporte para gestos táctiles (swipe)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        hero.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        hero.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                showNextSlide();
+                resetAutoPlay();
+            }
+            if (touchEndX > touchStartX + 50) {
+                showPrevSlide();
+                resetAutoPlay();
+            }
+        }
+    </script>
 
     setInterval(showNextSlide, 5000);
   </script>
@@ -242,4 +302,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+
 
