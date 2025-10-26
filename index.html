@@ -48,7 +48,33 @@
                 </div>
             </div>
         </section>
+ <div class="hero">
+    <div class="hero-slideshow">
+      <img src="FotoBanner1.jpg" class="slide active" alt="Slide 1">
+      <img src="FotoBanner2.jpg" class="slide" alt="Slide 2">
+      <img src="FotoBanner3.jpg" class="slide" alt="Slide 3">
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">Bienvenido a Nuestro Sitio</h1>
+      <p class="hero-subtitle">Descubre nuestras soluciones innovadoras</p>
+      <div class="hero-buttons">
+        <button class="cta-button primary">Comenzar</button>
+      </div>
+    </div>
+  </div>
 
+  <script>
+    const slides = document.querySelectorAll('.hero-slideshow .slide');
+    let current = 0;
+
+    function showNextSlide() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }
+
+    setInterval(showNextSlide, 5000);
+  </script>
         <section id="about" class="about-section">
             <div class="container">
                 <h2>Sobre Nuestra Escuela</h2>
@@ -216,3 +242,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
