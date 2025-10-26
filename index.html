@@ -265,106 +265,10 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script>
-        // Slideshow functionality
-        const slides = document.querySelectorAll('.hero-slideshow .slide');
-        const indicatorsContainer = document.getElementById('indicators');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        let current = 0;
-        let autoPlayInterval;
-
-        // Crear indicadores
-        slides.forEach((_, index) => {
-            const indicator = document.createElement('div');
-            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
-            indicator.addEventListener('click', () => goToSlide(index));
-            indicatorsContainer.appendChild(indicator);
-        });
-
-        const indicators = document.querySelectorAll('.indicator');
-
-        function updateSlide(newIndex) {
-            slides[current].classList.remove('active');
-            indicators[current].classList.remove('active');
-            
-            current = newIndex;
-            if (current >= slides.length) current = 0;
-            if (current < 0) current = slides.length - 1;
-            
-            slides[current].classList.add('active');
-            indicators[current].classList.add('active');
-        }
-
-        function showNextSlide() {
-            updateSlide(current + 1);
-        }
-
-        function showPrevSlide() {
-            updateSlide(current - 1);
-        }
-
-        function goToSlide(index) {
-            updateSlide(index);
-            resetAutoPlay();
-        }
-
-        function resetAutoPlay() {
-            clearInterval(autoPlayInterval);
-            startAutoPlay();
-        }
-
-        function startAutoPlay() {
-            autoPlayInterval = setInterval(showNextSlide, 5000);
-        }
-
-        // Event listeners
-        nextBtn.addEventListener('click', () => {
-            showNextSlide();
-            resetAutoPlay();
-        });
-
-        prevBtn.addEventListener('click', () => {
-            showPrevSlide();
-            resetAutoPlay();
-        });
-
-        // Pausar autoplay al hacer hover
-        const hero = document.querySelector('.hero');
-        hero.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
-        hero.addEventListener('mouseleave', startAutoPlay);
-
-        // Iniciar autoplay
-        startAutoPlay();
-
-        // Soporte para gestos táctiles (swipe)
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        hero.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        hero.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                showNextSlide();
-                resetAutoPlay();
-            }
-            if (touchEndX > touchStartX + 50) {
-                showPrevSlide();
-                resetAutoPlay();
-            }
-        }
-    </script>
+   
 </body>
 </html>
+
 
 
 
