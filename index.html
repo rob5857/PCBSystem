@@ -39,30 +39,62 @@
 
     <main>
         <section id="home" class="hero">
-            <div class="hero-slideshow">
-                <img src="FotoBanner.jpg" class="slide active" alt="Campus escolar">
-                <img src="FotoBanner2.jpg" class="slide" alt="Estudiantes">
-                <img src="FotoBanner3.jpg" class="slide" alt="Actividades escolares">
-            </div>
+  <div class="hero-slideshow">
+    <img src="FotoBanner1.jpg" class="slide active" alt="Slide 1">
+    <img src="FotoBanner2.jpg" class="slide" alt="Slide 2">
+    <img src="FotoBanner3.jpg" class="slide" alt="Slide 3">
+  </div>
+  <div class="overlay"></div>
 
-            <!-- Controles de navegación -->
-            <div class="slideshow-controls">
-                <button class="control-btn" id="prevBtn" aria-label="Anterior">‹</button>
-                <button class="control-btn" id="nextBtn" aria-label="Siguiente">›</button>
-            </div>
+  <div class="hero-content">
+    <h1 class="hero-title">Bienvenido a la Superior Pablo Colón Berdecia</h1>
+    <p class="hero-subtitle">Tu plataforma educativa para gestionar clases, tareas y horarios</p>
+    <div class="hero-buttons">
+      <button class="cta-button primary" onclick="scrollToSection('classes')">Ver Clases</button>
+      <button class="cta-button secondary" onclick="scrollToSection('contact')">Contáctanos</button>
+    </div>
+  </div>
 
-            <div class="hero-content">
-                <h1 class="hero-title">Bienvenido a la Superior Pablo Colón Berdecia</h1>
-                <p class="hero-subtitle">Tu plataforma educativa para gestionar clases, tareas y horarios</p>
-                <div class="hero-buttons">
-                    <button class="cta-button primary" onclick="scrollToSection('classes')">Ver Clases</button>
-                    <button class="cta-button secondary" onclick="scrollToSection('contact')">Contactanos</button>
-                </div>
-            </div>
+  <!-- Botones de control -->
+  <button class="slide-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+  <button class="slide-btn next" onclick="changeSlide(1)">&#10095;</button>
 
-            <!-- Indicadores -->
-            <div class="slideshow-indicators" id="indicators"></div>
-        </section>
+  <!-- Indicadores -->
+  <div class="slide-indicators" id="slideIndicators">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+  </div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.hero-slideshow .slide');
+  const dots = document.querySelectorAll('.dot');
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      dots[i].classList.toggle('active', i === index);
+    });
+  }
+
+  function changeSlide(direction) {
+    currentSlide = (currentSlide + direction + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    showSlide(currentSlide);
+  }
+
+  setInterval(() => changeSlide(1), 5000);
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
 
         <section id="about" class="about-section">
             <div class="container">
@@ -326,6 +358,7 @@
     </script>
 </body>
 </html>
+
 
 
 
